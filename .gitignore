@@ -1,0 +1,13 @@
+**/logs
+**/build
+.gradle
+.idea
+.DS_Store
+.java-version
+.project
+.classpath
+.settings/
+bin/
+out/
+*.iml
+.scannerwork/
