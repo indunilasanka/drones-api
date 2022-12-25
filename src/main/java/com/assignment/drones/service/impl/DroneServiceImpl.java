@@ -59,7 +59,7 @@ public class DroneServiceImpl implements DroneService {
 
         if (drone.getBatteryCapacity().compareTo(BigDecimal.valueOf(LOW_BATTERY_CAPACITY_THRESHOLD)) >= 0) {
             BigDecimal totalWeight = drone.getMedications().stream().map(Medication::getWeight).reduce(BigDecimal.ZERO, BigDecimal::add);
-            LOGGER.info("total weight of the drone before loading new medications: {}, max weight limit allowed: {}", totalWeight, drone.getWeightLimit());
+            LOGGER.info("Total weight of the drone before loading new medications: {}, max weight limit allowed: {}", totalWeight, drone.getWeightLimit());
 
             drone.setState(State.LOADING);
             droneRepository.save(drone);

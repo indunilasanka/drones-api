@@ -67,7 +67,7 @@ Please see the api endpoint 07 and 08 for more details.
 7. Upload medication image -> POST http://host:8080/api/images/medications
 ![img_6.png](screenshots/img_6.png)
 ---
-8. Download image -> GET http://localhost:8080/api/images/medications/{medication_id}
+8. Download image -> GET http://host:8080/api/images/medications/{medication_id}
 ![img_7.png](screenshots/img_7.png)
 ---
 9. Validation Errors -> 400 Bad Request
@@ -75,5 +75,19 @@ Please see the api endpoint 07 and 08 for more details.
 ---
 10. Entity not found errors -> 404 Not Found
 ![img_9.png](screenshots/img_9.png)
+
+---
+Scheduler log battery capacity
+![img.png](screenshots/img11.png)
+---
+
+Correlation Id in log stream and request/response headers
+
+![img.png](screenshots/img12.png)
+
+![img_1.png](screenshots/img_12.png)
+
+---
+"screenshots" folder contains some images which are embedded in readme file. 
 
 
