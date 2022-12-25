@@ -1,0 +1,384 @@
+{
+	"info": {
+		"_postman_id": "7e7cb069-1cbb-48cd-937e-12ab345466e2",
+		"name": "drones",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "getAllDrones",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/drones",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"drones"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getMedicationsLoadedForGivenDrone",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/drones/qiwue137164wiuoq/medications",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"drones",
+						"qiwue137164wiuoq",
+						"medications"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getMedicationsLoadedForGivenDrone - when drone not found for given serial number",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/drones/aabbabbabbabba/medications",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"drones",
+						"aabbabbabbabba",
+						"medications"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getDronesInTheGivenState",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/drones/state/LOADED",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"drones",
+						"state",
+						"LOADED"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getBatteryLevelOfGivenDrone",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/drones/oirepo21354opoij/battery-level",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"drones",
+						"oirepo21354opoij",
+						"battery-level"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addMedicationsToDrone - battery-level-validation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"medications\": [\r\n        {\r\n            \"code\": \"32498758\",\r\n            \"name\": \"RAPISOL\",\r\n            \"weight\": 28.88\r\n        },\r\n        {\r\n            \"code\": \"90834095\",\r\n            \"name\": \"RMAX\",\r\n            \"weight\": 122.00\r\n        },\r\n        {\r\n            \"code\": \"21564938\",\r\n            \"name\": \"ZINCOVIT\",\r\n            \"weight\": 84.12\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/drones/oirepo21354opoij/medications",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"drones",
+						"oirepo21354opoij",
+						"medications"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addMedicationsToDrone - weight-limit-validation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"medications\": [\r\n        {\r\n            \"code\": \"32498758\",\r\n            \"name\": \"RAPISOL\",\r\n            \"weight\": 28.88\r\n        },\r\n        {\r\n            \"code\": \"90834095\",\r\n            \"name\": \"RMAX\",\r\n            \"weight\": 122.00\r\n        },\r\n        {\r\n            \"code\": \"21564938\",\r\n            \"name\": \"ZONCOVIT\",\r\n            \"weight\": 84.12\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/drones/qiwue137164wiuoq/medications",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"drones",
+						"qiwue137164wiuoq",
+						"medications"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addMedicationsToDrone - medication-field-validation-errors",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"medications\": [\r\n        {\r\n            \"code\": \"=8301io\",\r\n            \"name\": \"rapisol\",\r\n            \"weight\": 28.88\r\n        },\r\n        {\r\n            \"code\": \"3943\",\r\n            \"name\": \"rmax\",\r\n            \"weight\": 122.00\r\n        },\r\n        {\r\n            \"code\": \"21564938\",\r\n            \"name\": \"ZONCOVIT\",\r\n            \"weight\": 84.12\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/drones/qiwue137164wiuoq/medications",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"drones",
+						"qiwue137164wiuoq",
+						"medications"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "loadMedicationsToDrone",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"medications\": [\r\n        {\r\n            \"code\": \"32498758\",\r\n            \"name\": \"RAPISOL\",\r\n            \"weight\": 28.88\r\n        },\r\n        {\r\n            \"code\": \"21564938\",\r\n            \"name\": \"ZONCOVIT\",\r\n            \"weight\": 84.12\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/drones/qiwue137164wiuoq/medications",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"drones",
+						"qiwue137164wiuoq",
+						"medications"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createDrone - drone-fields-validation-errors",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"serialNumber\": \"iwoue1308wewe38274egr7823y478heg37yegeg823y4eugur8274398732984geuwgur9234uegrugweyryuweryt93274982rgwer7929ygewygywgeruy28347wegrugweryyewtryterytyewrtywetryityewtry72349823i4gyergwyr9284uygweryweyrtyetryteyrtwytr324yewrytewyrer\",\r\n    \"model\": \"Heavyweight\",\r\n    \"weightLimit\": 502.00,\r\n    \"batteryCapacity\": 102.00\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/drones",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"drones"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createDrone",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"serialNumber\": \"iwoue1308wewe38274eg\",\r\n    \"model\": \"Heavyweight\",\r\n    \"weightLimit\": 480.44,\r\n    \"batteryCapacity\": 42.12\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/drones",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"drones"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "uploadImage",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Users/Infonet Computers/Desktop/med1.jpg"
+						},
+						{
+							"key": "medicationId",
+							"value": "1000",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/images/medications",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"images",
+						"medications"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "downloadImage",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/images/medications/1000",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"images",
+						"medications",
+						"1000"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "downloadImage - when no image exists for given medication id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/images/medications/1005",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"images",
+						"medications",
+						"1005"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
