@@ -1,15 +1,18 @@
-package com.assignment.drones.util;
+package com.assignment.drones.model;
 
-import com.assignment.drones.dto.DroneDTO;
-import com.assignment.drones.dto.MedicationDTO;
-import com.assignment.drones.model.Drone;
-import com.assignment.drones.model.Medication;
-import com.assignment.drones.model.State;
+import com.assignment.drones.model.domain.Drone;
+import com.assignment.drones.model.domain.Medication;
+import com.assignment.drones.model.domain.State;
+import com.assignment.drones.model.dto.DroneDTO;
+import com.assignment.drones.model.dto.MedicationDTO;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Mapper {
+/**
+ * Provide mapping functionalities map DTOs and domain models
+ */
+public class DTOMapper {
     public static Drone mapToDrone(DroneDTO dto) {
         Drone drone = new Drone();
         drone.setSerialNumber(dto.getSerialNumber());

@@ -1,4 +1,4 @@
-package com.assignment.drones.dto;
+package com.assignment.drones.model.dto;
 
 import javax.validation.constraints.Pattern;
 import java.math.BigDecimal;

@@ -1,5 +1,8 @@
 package com.assignment.drones.util;
 
+/**
+ * Define application constants
+ */
 public class Constants {
     public static final int LOW_BATTERY_CAPACITY_THRESHOLD = 25;
     public static final int SCHEDULER_DEFAULT_DELAY = 600000; //10mins

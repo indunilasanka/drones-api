@@ -1,6 +1,6 @@
 package com.assignment.drones.handler;
 
-import com.assignment.drones.dto.DroneDTO;
+import com.assignment.drones.model.dto.DroneDTO;
 import com.assignment.drones.service.DroneService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +12,9 @@ import java.util.List;
 
 import static com.assignment.drones.util.Constants.SCHEDULER_DEFAULT_DELAY;
 
+/**
+ * Works as a scheduler to execute scheduled tasks
+ */
 @Component
 public class Scheduler {
     private final Logger logger = LoggerFactory.getLogger(Scheduler.class);

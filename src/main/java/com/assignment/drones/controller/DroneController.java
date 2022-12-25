@@ -1,6 +1,6 @@
 package com.assignment.drones.controller;
 
-import com.assignment.drones.dto.*;
+import com.assignment.drones.model.dto.*;
 import com.assignment.drones.service.DroneService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+/**
+ * Drone API interfaces
+ */
 @RestController
 @RequestMapping("/api/drones")
 public class DroneController extends BaseController {

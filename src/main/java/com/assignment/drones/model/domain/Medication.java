@@ -1,8 +1,11 @@
-package com.assignment.drones.model;
+package com.assignment.drones.model.domain;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 
+/**
+ * Medication entity
+ */
 @Entity
 @Table(name = "medication")
 public class Medication {

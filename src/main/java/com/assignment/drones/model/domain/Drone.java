@@ -1,4 +1,4 @@
-package com.assignment.drones.model;
+package com.assignment.drones.model.domain;
 
 import org.hibernate.annotations.Cascade;
 
@@ -7,6 +7,9 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Drone entity
+ */
 @Entity
 @Table(name = "drone")
 public class Drone {

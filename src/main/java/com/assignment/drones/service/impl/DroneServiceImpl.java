@@ -1,16 +1,19 @@
 package com.assignment.drones.service.impl;
 
-import com.assignment.drones.dto.BatteryCapacityDTO;
-import com.assignment.drones.dto.DroneDTO;
-import com.assignment.drones.dto.MedicationDTO;
 import com.assignment.drones.exception.RuntimeValidationException;
-import com.assignment.drones.model.Drone;
-import com.assignment.drones.model.Medication;
-import com.assignment.drones.model.State;
+import com.assignment.drones.model.domain.Drone;
+import com.assignment.drones.model.domain.Medication;
+import com.assignment.drones.model.domain.State;
+import com.assignment.drones.model.dto.BatteryCapacityDTO;
+import com.assignment.drones.model.DTOMapper;
+import com.assignment.drones.model.dto.DroneDTO;
+import com.assignment.drones.model.dto.MedicationDTO;
 import com.assignment.drones.repository.DroneRepository;
 import com.assignment.drones.repository.MedicationRepository;
 import com.assignment.drones.service.DroneService;
-import com.assignment.drones.util.Mapper;
+import com.assignment.drones.util.Utilities;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,9 +24,13 @@ import java.util.Optional;
 
 import static com.assignment.drones.util.Constants.LOW_BATTERY_CAPACITY_THRESHOLD;
 
+/**
+ * Default implementation of drone API business operations
+ */
 @Service
 @Transactional
 public class DroneServiceImpl implements DroneService {
+    private final Logger LOGGER = LoggerFactory.getLogger(DroneServiceImpl.class);
     private final DroneRepository droneRepository;
     private final MedicationRepository medicationRepository;
 
@@ -34,8 +41,8 @@ public class DroneServiceImpl implements DroneService {
 
     @Override
     public DroneDTO createDrone(DroneDTO dto) {
-        Drone drone = droneRepository.save(Mapper.mapToDrone(dto));
-        return Mapper.mapToDroneDTO(drone);
+        Drone drone = droneRepository.save(DTOMapper.mapToDrone(dto));
+        return DTOMapper.mapToDroneDTO(drone);
     }
 
     @Override
@@ -49,16 +56,19 @@ public class DroneServiceImpl implements DroneService {
 
         if (drone.getBatteryCapacity().compareTo(BigDecimal.valueOf(LOW_BATTERY_CAPACITY_THRESHOLD)) >= 0) {
             BigDecimal totalWeight = drone.getMedications().stream().map(Medication::getWeight).reduce(BigDecimal.ZERO, BigDecimal::add);
+            LOGGER.info("total weight of the drone before loading new medications: {}, max weight limit allowed: {}", totalWeight, drone.getWeightLimit());
 
             drone.setState(State.LOADING);
             droneRepository.save(drone);
 
             for (MedicationDTO dto : medications) {
-                Medication medication = Mapper.mapToMedication(dto);
+                Medication medication = DTOMapper.mapToMedication(dto);
 
                 if (drone.getWeightLimit().compareTo(totalWeight.add(medication.getWeight())) > 0) {
                     medication.setDrone(drone);
                     medication = medicationRepository.save(medication);
+                    LOGGER.debug("Created medication: {}", Utilities.toString(medication, false));
+
                     drone.getMedications().add(medication);
                     totalWeight = totalWeight.add(medication.getWeight());
                 } else {
@@ -68,7 +78,7 @@ public class DroneServiceImpl implements DroneService {
 
             drone.setState(State.LOADED);
             drone = droneRepository.save(drone);
-            return Mapper.mapMedicationListToDTOs(drone.getMedications());
+            return DTOMapper.mapMedicationListToDTOs(drone.getMedications());
         } else {
             throw new RuntimeValidationException("Drone battery level is below the required margin to load medications");
         }
@@ -82,7 +92,7 @@ public class DroneServiceImpl implements DroneService {
         }
 
         Drone drone = optionalDrone.get();
-        return Mapper.mapMedicationListToDTOs(drone.getMedications());
+        return DTOMapper.mapMedicationListToDTOs(drone.getMedications());
     }
 
     @Override
@@ -101,13 +111,13 @@ public class DroneServiceImpl implements DroneService {
     @Override
     public List<DroneDTO> getDronesForGivenState(String state) {
         List<Drone> drones = droneRepository.findByState(State.valueOf(state.toUpperCase()));
-        return Mapper.mapDroneListToDTOs(drones);
+        return DTOMapper.mapDroneListToDTOs(drones);
     }
 
     @Override
     public List<DroneDTO> getAllDrones() {
         List<Drone> drones = droneRepository.findAll();
-        return Mapper.mapDroneListToDTOs(drones);
+        return DTOMapper.mapDroneListToDTOs(drones);
     }
 
 }

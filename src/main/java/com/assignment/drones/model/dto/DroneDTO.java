@@ -1,7 +1,7 @@
-package com.assignment.drones.dto;
+package com.assignment.drones.model.dto;
 
-import com.assignment.drones.model.Model;
-import com.assignment.drones.model.State;
+import com.assignment.drones.model.domain.Model;
+import com.assignment.drones.model.domain.State;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotEmpty;

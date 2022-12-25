@@ -1,4 +1,4 @@
-package com.assignment.drones.dto;
+package com.assignment.drones.model.dto;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
