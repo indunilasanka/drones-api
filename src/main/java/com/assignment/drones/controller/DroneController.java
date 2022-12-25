@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/drones")
-public class DroneController {
+public class DroneController extends BaseController {
     private final DroneService droneService;
 
     public DroneController(DroneService droneService) {
