@@ -9,6 +9,8 @@ import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 
 public class DroneDTO {
+
+
     @Size(max = 100, message = "Serial number should not be greater than 100 characters")
     @NotEmpty(message = "Serial number should not be empty")
     private String serialNumber;

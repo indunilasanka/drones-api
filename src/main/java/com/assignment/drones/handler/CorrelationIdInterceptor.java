@@ -13,6 +13,9 @@ import java.util.UUID;
 import static com.assignment.drones.util.Constants.CORRELATION_ID_LOG_ATTRIBUTE;
 import static com.assignment.drones.util.Constants.CORRELATION_ID_REQUEST_HEADER;
 
+/**
+ * Interceptor logic to populate a unique correlation id for each request
+ */
 @Component
 public class CorrelationIdInterceptor implements HandlerInterceptor {
 

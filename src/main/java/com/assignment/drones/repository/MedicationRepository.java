@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
  * Define repository operations for Medication API
  */
 @Repository
-public interface MedicationRepository extends JpaRepository<Medication, String> {
+public interface MedicationRepository extends JpaRepository<Medication, Long> {
 }

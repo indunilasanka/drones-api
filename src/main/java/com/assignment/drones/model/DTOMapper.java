@@ -35,10 +35,10 @@ public class DTOMapper {
 
     public static MedicationDTO mapToMedicationDTO(Medication medication) {
         MedicationDTO dto = new MedicationDTO();
+        dto.setId(medication.getId());
         dto.setCode(medication.getCode());
         dto.setName(medication.getName());
         dto.setWeight(medication.getWeight());
-        dto.setImage(medication.getImage());
         return dto;
     }
 

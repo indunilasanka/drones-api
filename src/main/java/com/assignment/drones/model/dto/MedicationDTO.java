@@ -1,15 +1,26 @@
 package com.assignment.drones.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.validation.constraints.Pattern;
 import java.math.BigDecimal;
 
 public class MedicationDTO {
+    private long id;
     @Pattern(regexp = "[A-Za-z0-9_-]+", message = "Only letters, numbers, - and _ allowed for Code")
     private String code;
     @Pattern(regexp = "[A-Z0-9_]+", message = "Only upper case letters, numbers and _ allowed for Name")
     private String name;
     private BigDecimal weight;
     private byte[] image;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getCode() {
         return code;
@@ -35,6 +46,7 @@ public class MedicationDTO {
         this.weight = weight;
     }
 
+    @JsonIgnore
     public byte[] getImage() {
         return image;
     }

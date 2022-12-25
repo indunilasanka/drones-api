@@ -1,11 +1,11 @@
 package com.assignment.drones.service.impl;
 
 import com.assignment.drones.exception.RuntimeValidationException;
+import com.assignment.drones.model.DTOMapper;
 import com.assignment.drones.model.domain.Drone;
 import com.assignment.drones.model.domain.Medication;
 import com.assignment.drones.model.domain.State;
 import com.assignment.drones.model.dto.BatteryCapacityDTO;
-import com.assignment.drones.model.DTOMapper;
 import com.assignment.drones.model.dto.DroneDTO;
 import com.assignment.drones.model.dto.MedicationDTO;
 import com.assignment.drones.repository.DroneRepository;
@@ -14,6 +14,7 @@ import com.assignment.drones.service.DroneService;
 import com.assignment.drones.util.Utilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,28 +29,30 @@ import static com.assignment.drones.util.Constants.LOW_BATTERY_CAPACITY_THRESHOL
  * Default implementation of drone API business operations
  */
 @Service
-@Transactional
 public class DroneServiceImpl implements DroneService {
     private final Logger LOGGER = LoggerFactory.getLogger(DroneServiceImpl.class);
     private final DroneRepository droneRepository;
     private final MedicationRepository medicationRepository;
 
+    @Autowired
     public DroneServiceImpl(DroneRepository droneRepository, MedicationRepository medicationRepository) {
         this.droneRepository = droneRepository;
         this.medicationRepository = medicationRepository;
     }
 
     @Override
+    @Transactional
     public DroneDTO createDrone(DroneDTO dto) {
         Drone drone = droneRepository.save(DTOMapper.mapToDrone(dto));
         return DTOMapper.mapToDroneDTO(drone);
     }
 
     @Override
+    @Transactional
     public List<MedicationDTO> addMedications(String serialNumber, List<MedicationDTO> medications) {
         Optional<Drone> optionalDrone = droneRepository.findById(serialNumber);
         if (optionalDrone.isEmpty()) {
-            throw new EntityNotFoundException(String.format("No drone exists for the given serial number: {}", serialNumber));
+            throw new EntityNotFoundException("No drone exists for the given serial number: " + serialNumber);
         }
 
         Drone drone = optionalDrone.get();
@@ -85,10 +88,11 @@ public class DroneServiceImpl implements DroneService {
     }
 
     @Override
+    @Transactional
     public List<MedicationDTO> getLoadedMedications(String serialNumber) {
         Optional<Drone> optionalDrone = droneRepository.findById(serialNumber);
         if (optionalDrone.isEmpty()) {
-            throw new EntityNotFoundException(String.format("No drone exists for the given serial number: {}", serialNumber));
+            throw new EntityNotFoundException("No drone exists for the given serial number: " + serialNumber);
         }
 
         Drone drone = optionalDrone.get();
@@ -99,7 +103,7 @@ public class DroneServiceImpl implements DroneService {
     public BatteryCapacityDTO getBatteryLevel(String serialNumber) {
         Optional<Drone> optionalDrone = droneRepository.findById(serialNumber);
         if (optionalDrone.isEmpty()) {
-            throw new EntityNotFoundException(String.format("No drone exists for the given serial number: {}", serialNumber));
+            throw new EntityNotFoundException("No drone exists for the given serial number: " + serialNumber);
         }
 
         Drone drone = optionalDrone.get();

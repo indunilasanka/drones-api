@@ -4,6 +4,7 @@ import com.assignment.drones.model.dto.DroneDTO;
 import com.assignment.drones.service.DroneService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +21,7 @@ public class Scheduler {
     private final Logger logger = LoggerFactory.getLogger(Scheduler.class);
     private final DroneService droneService;
 
+    @Autowired
     public Scheduler(DroneService droneService) {
         this.droneService = droneService;
     }

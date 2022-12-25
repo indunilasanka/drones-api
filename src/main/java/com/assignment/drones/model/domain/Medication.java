@@ -24,7 +24,7 @@ public class Medication {
     private BigDecimal weight;
 
     @Lob
-    @Basic(fetch = FetchType.LAZY)
+    @Column(name = "image")
     private byte[] image;
 
     @ManyToOne

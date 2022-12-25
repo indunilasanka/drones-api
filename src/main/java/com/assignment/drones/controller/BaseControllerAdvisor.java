@@ -1,7 +1,7 @@
 package com.assignment.drones.controller;
 
 import com.assignment.drones.exception.RuntimeValidationException;
-import com.assignment.drones.model.dto.ErrorResponseDTO;
+import com.assignment.drones.model.dto.BaseResponseDTO;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,17 +17,18 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static com.assignment.drones.util.Constants.RequestStatus.ERROR;
 import static org.springframework.http.HttpStatus.*;
 
 /**
- * Global exception handler which capture exceptions/errors and return custom error messages
+ * Controller advice which capture exceptions/errors and return custom error messages
  */
 @ControllerAdvice
-public abstract class BaseController {
-    private final Logger LOGGER = LoggerFactory.getLogger(BaseController.class);
+public abstract class BaseControllerAdvisor {
+    private final Logger LOGGER = LoggerFactory.getLogger(BaseControllerAdvisor.class);
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponseDTO> handleValidationExceptions(MethodArgumentNotValidException ex) {
+    public ResponseEntity<BaseResponseDTO> handleValidationExceptions(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach((error) -> {
             String fieldName = ((FieldError) error).getField();
@@ -39,48 +40,48 @@ public abstract class BaseController {
                 .collect(Collectors.joining("; ", "", ""));
         LOGGER.error("validation errors: {}", errorMessage);
 
-        ErrorResponseDTO response = new ErrorResponseDTO();
-        response.setCode(BAD_REQUEST.value());
+        BaseResponseDTO response = new BaseResponseDTO();
+        response.setStatus(ERROR);
         response.setMessage(errorMessage);
         return new ResponseEntity<>(response, BAD_REQUEST);
     }
 
     @ExceptionHandler(RuntimeValidationException.class)
-    public ResponseEntity<ErrorResponseDTO> handleRuntimeValidationExceptions(RuntimeValidationException ex) {
+    public ResponseEntity<BaseResponseDTO> handleRuntimeValidationExceptions(RuntimeValidationException ex) {
         LOGGER.error("Run time validation failure: {}", ex.getMessage());
 
-        ErrorResponseDTO response = new ErrorResponseDTO();
-        response.setCode(BAD_REQUEST.value());
+        BaseResponseDTO response = new BaseResponseDTO();
+        response.setStatus(ERROR);
         response.setMessage(ex.getMessage());
         return new ResponseEntity<>(response, BAD_REQUEST);
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<ErrorResponseDTO> handleEntityNotFoundExceptions(EntityNotFoundException ex) {
+    public ResponseEntity<BaseResponseDTO> handleEntityNotFoundExceptions(EntityNotFoundException ex) {
         LOGGER.error("Resource not found error: {}", ex.getMessage());
 
-        ErrorResponseDTO response = new ErrorResponseDTO();
-        response.setCode(NOT_FOUND.value());
+        BaseResponseDTO response = new BaseResponseDTO();
+        response.setStatus(ERROR);
         response.setMessage(ex.getMessage());
         return new ResponseEntity<>(response, NOT_FOUND);
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public ResponseEntity<ErrorResponseDTO> handleMethodNotSupportedExceptios(HttpRequestMethodNotSupportedException ex) {
+    public ResponseEntity<BaseResponseDTO> handleMethodNotSupportedExceptios(HttpRequestMethodNotSupportedException ex) {
         LOGGER.error("Method not found error: {}", ex.getMessage());
 
-        ErrorResponseDTO response = new ErrorResponseDTO();
-        response.setCode(METHOD_NOT_ALLOWED.value());
+        BaseResponseDTO response = new BaseResponseDTO();
+        response.setStatus(ERROR);
         response.setMessage(ex.getMessage());
         return new ResponseEntity<>(response, METHOD_NOT_ALLOWED);
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponseDTO> handleServerErrors(Exception ex) {
+    public ResponseEntity<BaseResponseDTO> handleServerErrors(Exception ex) {
         LOGGER.error("Server error : {}", ExceptionUtils.getStackTrace(ex));
 
-        ErrorResponseDTO response = new ErrorResponseDTO();
-        response.setCode(INTERNAL_SERVER_ERROR.value());
+        BaseResponseDTO response = new BaseResponseDTO();
+        response.setStatus(ERROR);
         response.setMessage("Server error: contact server admin");
         return new ResponseEntity<>(response, INTERNAL_SERVER_ERROR);
     }
