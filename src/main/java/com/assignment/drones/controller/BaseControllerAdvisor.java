@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static com.assignment.drones.util.Constants.RequestStatus.ERROR;
+import static com.assignment.drones.util.Constants.RequestStatus.FAILURE;
 import static org.springframework.http.HttpStatus.*;
 
 /**
@@ -51,7 +52,7 @@ public abstract class BaseControllerAdvisor {
         LOGGER.error("Run time validation failure: {}", ex.getMessage());
 
         BaseResponseDTO response = new BaseResponseDTO();
-        response.setStatus(ERROR);
+        response.setStatus(FAILURE);
         response.setMessage(ex.getMessage());
         return new ResponseEntity<>(response, BAD_REQUEST);
     }

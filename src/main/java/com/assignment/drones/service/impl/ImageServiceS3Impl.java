@@ -26,9 +26,14 @@ import java.util.Optional;
 /**
  * Implementation of image operations using AWS S3 storage
  */
+
+//
+// THIS SERVICE IS NOT IN USE,
+// I DIDNT TEST THIS AS WELL
+//
 @Service("s3ImageService")
-public class S3ImageServiceImpl implements ImageService {
-    private final Logger LOGGER = LoggerFactory.getLogger(S3ImageServiceImpl.class);
+public class ImageServiceS3Impl implements ImageService {
+    private final Logger LOGGER = LoggerFactory.getLogger(ImageServiceS3Impl.class);
     private final AmazonS3 amazonS3Client;
     private final MedicationRepository medicationRepository;
     @Value("${application.bucket.name}")
@@ -37,7 +42,7 @@ public class S3ImageServiceImpl implements ImageService {
     private String region;
 
     @Autowired
-    public S3ImageServiceImpl(MedicationRepository medicationRepository) {
+    public ImageServiceS3Impl(MedicationRepository medicationRepository) {
         this.amazonS3Client = null; //AmazonS3ClientBuilder.standard().withRegion(region).build();
         this.medicationRepository = medicationRepository;
     }

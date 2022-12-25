@@ -20,12 +20,12 @@ import static com.assignment.drones.util.Constants.RequestStatus.SUCCESS;
 /**
  * Implementation of image operations using Database storage
  */
-@Service("dbImageService")
-public class DBImageServiceImpl implements ImageService {
-    private final Logger LOGGER = LoggerFactory.getLogger(DBImageServiceImpl.class);
+@Service("imageService")
+public class ImageServiceDBImpl implements ImageService {
+    private final Logger LOGGER = LoggerFactory.getLogger(ImageServiceDBImpl.class);
     private final MedicationRepository medicationRepository;
 
-    public DBImageServiceImpl(MedicationRepository medicationRepository) {
+    public ImageServiceDBImpl(MedicationRepository medicationRepository) {
         this.medicationRepository = medicationRepository;
     }
 
